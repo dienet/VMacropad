@@ -14,24 +14,32 @@
 ![App Screenshot](screenshot.png)
 
 ## Why this exists
-I bought a cheap "3-key 1-knob" macropad from AliExpress/Amazon. The hardware is great, but the provided software was terrible and it looked like a Windows 98 app, flagged my antivirus, and couldn't switch profiles automatically based on the active window.
+I bought a cheap "3-key 1-knob" macropad from AliExpress. The hardware is great. The provided software was terrible. It looked like a Windows 98 app, flagged my antivirus, and could not switch profiles automatically based on the active window.
 
-I reverse-engineered the HID protocol and built **VMacropad** to fix these issues. It's written in Python, fully transparent, and includes the features these devices should have had out of the box.
+I reverse-engineered the HID protocol and built **VMacropad** to fix these issues. It is written in Python, fully transparent, and includes the features these devices should have had out of the box.
 
 ## Supported Hardware
-This software is designed for macropads using the **CH57x/CH55x** chips, commonly identified by:
+This software is designed for generic macropads using the **CH57x/CH55x** chips.
+
+**Default Hardware IDs:**
 *   **Vendor ID:** `0x1189`
 *   **Product ID:** `0x8890`
 
-*Note: If your device has different IDs, you can override them in the `config.json` file generated after the first run.*
+**Replaces software for:**
+*   SayoDevice / SimPad (Generic Clones)
+*   "RSoft" MacroPad
+*   Generic "3-Key Mini Keyboard" listings on Amazon/AliExpress
+*   Devices that identify as "Keypad" or "USB Input Device" with the IDs above
+
+*Note: If your device uses different IDs, you can change them directly in the app Settings menu.*
 
 ## Features
-*   **Auto-Profile Switching:** Automatically changes key mappings based on which app you are using (e.g., Photoshop shortcuts when Photoshop is open, Media keys when Spotify is open).
+*   **Auto-Profile Switching:** Automatically changes key mappings based on which app you are using. Use Photoshop shortcuts when Photoshop is open, then switch to Media keys when Spotify is focused.
 *   **Modern UI:** Clean, Dark Mode interface using CustomTkinter.
 *   **System Tray Integration:** Minimizes silently to the background with very low resource usage (~0% CPU).
 *   **Visual Config:** Interactive visualizer to see exactly what you are programming.
-*   **No "Apply" Button:** Changes upload to the device memory instantly.
-*   **Portable:** Single `.exe` file, no installation required.
+*   **Instant Save:** No "Apply" button required. Changes upload to the device memory instantly.
+*   **Portable:** Single `.exe` file. No installation required.
 
 ## Installation
 
@@ -41,7 +49,7 @@ This software is designed for macropads using the **CH57x/CH55x** chips, commonl
 3.  Run it.
 
 ### For Developers (Running from Source)
-If you want to modify the code or run it via Python:
+If you want to inspect the code or run it via Python:
 
 ```bash
 # Clone the repository
@@ -55,13 +63,13 @@ python vmacropad.py
 ```
 
 ## How to use Auto-Switching
-1.  Create a preset (e.g., "Photoshop").
-2.  Click **"Link to App"**.
+1.  Create a new preset (e.g. "Photoshop").
+2.  Click the **"Link to App"** button.
 3.  You have 3 seconds to click on your target application window.
 4.  Done. Whenever that app is in focus, the macropad will switch to that preset automatically.
 
 ## Building the EXE
-If you want to compile it yourself, use the following PyInstaller command to ensure the icon and theme files are bundled correctly:
+If you want to compile it yourself, use the following PyInstaller command. This ensures the icon and theme files are bundled correctly inside the executable.
 
 ```powershell
 pyinstaller --noconsole --onefile --icon="vmacropad.ico" --add-data "vmacropad.ico;." --hidden-import=win32gui --hidden-import=win32process --hidden-import=psutil --name="VMacropad" --collect-all customtkinter --clean vmacropad.py
