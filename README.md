@@ -37,7 +37,7 @@ This software is designed for macropads using the **CH57x/CH55x** chips, commonl
 ### For Users (Recommended)
 1.  Go to the [**Releases**](https://github.com/visiuun/VMacropad/releases) page on the right.
 2.  Download `VMacropad.exe`.
-3.  Run it. (You may need to "Run as Administrator" if you want it to interact with games or admin-level apps).
+3.  Run it.
 
 ### For Developers (Running from Source)
 If you want to modify the code or run it via Python:
