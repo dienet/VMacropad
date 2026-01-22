@@ -8,6 +8,7 @@
   <a href="https://github.com/visiuun/VMacropad/releases/latest">
     <img src="https://img.shields.io/badge/Download-Windows%20Exe-blue?style=for-the-badge&logo=windows" alt="Download">
   </a>
+  <br><br>
 </div>
 
 ![App Screenshot](screenshot.png)
