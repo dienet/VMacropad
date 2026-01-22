@@ -23,7 +23,6 @@ except:
     pass
 
 # --- DEPENDENCIES CHECK ---
-# We make these global so we can check if they exist later
 psutil = None
 win32gui = None
 win32process = None
@@ -252,6 +251,9 @@ class VMacroApp(ctk.CTk):
         self.last_detected_target = None
         self.focus_timer_start = 0
         self.last_auto_uploaded_preset = None
+        
+        # New flag: If user manually selects a preset, pause auto-switching until a LINKED app is found
+        self.manual_override = False
 
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
@@ -672,17 +674,33 @@ class VMacroApp(ctk.CTk):
         
         current_app = self.get_active_app_process()
         
-        if current_app: 
-            target_preset = self.app_mappings.get(current_app)
-            if not target_preset:
+        # Determine the intended preset for the current app
+        target_preset = None
+        
+        # Case 1: App is linked
+        if current_app and current_app in self.app_mappings:
+            target_preset = self.app_mappings[current_app]
+            # If we hit a linked app, we disable any manual override
+            if self.manual_override:
+                self.manual_override = False
+        
+        # Case 2: App is not linked (or no app detected)
+        else:
+            # If manual override is active, stick to current, don't change anything
+            if self.manual_override:
+                target_preset = self.last_auto_uploaded_preset # Maintain status quo
+            else:
+                # Standard behavior: Fallback to default
                 target_preset = self.default_preset_name
-            
+
+        # Apply logic
+        if target_preset:
             if target_preset != self.last_detected_target:
                 self.last_detected_target = target_preset
                 self.focus_timer_start = time.time()
             else:
                 if (time.time() - self.focus_timer_start) > 0.5:
-                    if target_preset and target_preset != self.last_auto_uploaded_preset:
+                    if target_preset != self.last_auto_uploaded_preset:
                         if self.pad.is_connected() and not self.is_uploading:
                             self.last_auto_uploaded_preset = target_preset
                             self.after(0, self.safe_auto_load, target_preset)
@@ -691,11 +709,19 @@ class VMacroApp(ctk.CTk):
 
     def safe_auto_load(self, target_preset):
         if self.running and self.winfo_exists():
+            # is_auto=True prevents setting manual_override to True
             self.load_preset_by_name(target_preset, is_auto=True)
             self.start_upload()
 
     def load_preset_by_name(self, name, is_auto=False):
         if name not in self.presets: return
+        
+        # If loaded manually, enable override lock so we don't snap back to Default immediately
+        if not is_auto:
+            self.manual_override = True
+            # Also update last_auto_uploaded so the loop knows where we are
+            self.last_auto_uploaded_preset = name
+            
         self.current_preset_name = name
         self.save_config_state()
         data = self.presets[name]
@@ -1026,10 +1052,22 @@ class VMacroApp(ctk.CTk):
             self.tray_icon = pystray.Icon("VMacropad", img, "V Macropad", self.create_tray_menu())
             threading.Thread(target=self.tray_icon.run, daemon=True).start()
 
+    def _make_tray_action(self, name):
+        # Returns a function with signature (icon, item)
+        return lambda icon, item: self.tray_activate_preset(name)
+
+    def _make_tray_check(self, name):
+        # Returns a function with signature (item)
+        return lambda item: self.current_preset_name == name
+
     def create_tray_menu(self):
         items = [pystray.MenuItem("Open", self.show_window_tray, default=True), pystray.Menu.SEPARATOR]
         for name in self.presets:
-            items.append(pystray.MenuItem(name, lambda i, n=name: self.tray_activate_preset(n), checked=lambda i, c=(name==self.current_preset_name): c))
+            items.append(pystray.MenuItem(
+                name, 
+                self._make_tray_action(name), 
+                checked=self._make_tray_check(name)
+            ))
         items.append(pystray.Menu.SEPARATOR)
         items.append(pystray.MenuItem("Quit", self.quit_app))
         return pystray.Menu(*items)
