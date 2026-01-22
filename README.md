@@ -2,7 +2,6 @@
 
 <div align="center">
   <img src="vmacropad.ico" width="128" height="128" alt="VMacropad Icon">
-  ![App Screenshot](screenshot.png)
   <br>
   <b>An open-source, modern replacement driver for generic 3-Key / 1-Knob Macropads.</b>
   <br><br>
@@ -10,6 +9,8 @@
     <img src="https://img.shields.io/badge/Download-Windows%20Exe-blue?style=for-the-badge&logo=windows" alt="Download">
   </a>
 </div>
+
+![App Screenshot](screenshot.png)
 
 ## Why this exists
 I bought a cheap "3-key 1-knob" macropad from AliExpress/Amazon. The hardware is great, but the provided software was terrible and it looked like a Windows 98 app, flagged my antivirus, and couldn't switch profiles automatically based on the active window.
