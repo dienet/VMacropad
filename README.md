@@ -11,7 +11,7 @@
 </div>
 
 ## Why this exists
-I bought a cheap "3-key 1-knob" macropad from AliExpress/Amazon. The hardware is great, but the provided software was terrible—it looked like a Windows 98 app, flagged my antivirus, and couldn't switch profiles automatically based on the active window.
+I bought a cheap "3-key 1-knob" macropad from AliExpress/Amazon. The hardware is great, but the provided software was terrible and it looked like a Windows 98 app, flagged my antivirus, and couldn't switch profiles automatically based on the active window.
 
 I reverse-engineered the HID protocol and built **VMacropad** to fix these issues. It's written in Python, fully transparent, and includes the features these devices should have had out of the box.
 
